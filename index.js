@@ -53,6 +53,9 @@ jsonfile.readFile(file, function (err, obj) {
       } else if (parseField === 'updatedAt') {
         parseItem['_updated_at'] = { '$date': parseItem['updatedAt'] };
         delete parseItem['updatedAt'];
+      } else if (parseField === 'bcryptPassword') {
+        parseItem['_hashed_password'] = parseItem['bcryptPassword'];
+        delete parseItem['bcryptPassword'];
       } else {
         var value = parseItem[parseField]
         if (value !== null && typeof value === 'object' && value['__type'] == 'Pointer') {
