@@ -58,6 +58,12 @@ jsonfile.readFile(file, function (err, obj) {
         parseItem['_updated_at'] = { '$date': parseItem['updatedAt'] };
         delete parseItem['updatedAt'];
       }
+
+      var value = parseItem[parseField]
+      if (value != null && typeof value === 'object' && value['__type'] == 'Pointer') {
+        parseItem['_p_' + parseField] = value['className'] + '$' + value['objectId']
+        delete parseItem[parseField]
+      }
     }
     newArray.push(parseItem)
   }
